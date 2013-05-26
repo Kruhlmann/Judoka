@@ -12,9 +12,12 @@ import com.kruhlmann.judoka.sound.Sound;
 
 public class Technique {
 
-	public static final Technique O_SOTO_GARI = new Technique(0, 40, 30, 25, Animation.O_SOTO_GARI, Animation.o_soto_gari, 60, 30, 30, 20, 20, 40, 30, 30, false, true, true, true, null, null, "O Soto Gari");
-	public static final Technique UCHI_MATA = new Technique(1, 35, 27, 20, Animation.UCHI_MATA, Animation.uchi_mata, 60, 40, 0, 20, 25, 30, 20, 20, false, true, true, false, null, null, "Uchi Mata");
-	public static final Technique MOROTE_SEOI_NAGE = new Technique(2, 45, 37, 15, Animation.MOROTE_SEOI_NAGE, Animation.morote_seoi_nage, 50, 0, 10, 8, 7, 15, 20, 15, false, false, true, true, null, null, "Morote Seoi Nage");
+	public static final Technique O_SOTO_GARI = new Technique(0, 40, 30, 20, Animation.O_SOTO_GARI, Animation.o_soto_gari, 60, 30, 30, 20, 20, 40, 30, 30, false, true, true, true, null, null, "O Soto Gari");
+	public static final Technique UCHI_MATA = new Technique(1, 35, 29, 25, Animation.UCHI_MATA, Animation.uchi_mata, 50, 40, 0, 20, 25, 30, 20, 20, false, true, true, false, null, null, "Uchi Mata");
+	public static final Technique MOROTE_SEOI_NAGE = new Technique(2, 45, 37, 15, Animation.MOROTE_SEOI_NAGE, Animation.morote_seoi_nage, 60, 0, 10, 8, 7, 15, 20, 15, false, false, true, true, null, null, "Morote Seoi Nage");
+	public static final Technique ERI_SEOI_NAGE = new Technique(3, 50, 40, 12, Animation.MOROTE_SEOI_NAGE, Animation.morote_seoi_nage, 60, 0, 15, 7, 7, 15, 10, 10, false, false, true, true, null, null, "Eri Seoi Nage");
+	
+	
 	
 	
 	public int ID;
