@@ -22,7 +22,10 @@ public class Sound {
 	public static final Sound SHIDO = new Sound("/sound/shido.wav");
 	public static final Sound HANSOKUMAKE = new Sound("/sound/hansokumake.wav");
 	public static final Sound FIGHTING_MUSIC = new Sound("/sound/fight.wav");
+	public static final Sound ALT_FIGHTING_MUSIC = new Sound("/sound/fightAlt.wav");
 
+	public static boolean alternativeBattleMusic = false;
+	
 	private AudioClip audio;
 
 	public Sound(String path) {
@@ -49,6 +52,7 @@ public class Sound {
 	public static void stopAll() {
 		MUSIC_MENU.stop();
 		FIGHTING_MUSIC.stop();
+		ALT_FIGHTING_MUSIC.stop();
 	}
 
 }

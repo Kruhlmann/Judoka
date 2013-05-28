@@ -8,6 +8,7 @@ import com.kruhlmann.judoka.JudokaComponent;
 public class Main extends Menu{
 
 	private String[] items = {
+			"Create Judoka",
 			"Singleplayer",
 			"Multiplayer",
 			"About",
@@ -45,11 +46,17 @@ public class Main extends Menu{
 		if(selectedItem > items.length - 1) selectedItem = items.length - 1;
 		if(selectedItem < 0) selectedItem = 0;
 		if(JudokaComponent.input.enter){
-			if(selectedItem == 0) JudokaComponent.changeMenu(JudokaComponent.SINGLEPLAYER);
-			else if(selectedItem == 1) JudokaComponent.changeMenu(JudokaComponent.MULTIPLAYER);
-			else if(selectedItem == 2) JudokaComponent.changeMenu(JudokaComponent.ABOUT);
-			else if(selectedItem == 3) JudokaComponent.changeMenu(JudokaComponent.EXIT);
+			if(selectedItem == 0) JudokaComponent.changeMenu(JudokaComponent.CREATE_JUDOKA);
+			else if(selectedItem == 1) JudokaComponent.changeMenu(JudokaComponent.SINGLEPLAYER);
+			else if(selectedItem == 2) JudokaComponent.changeMenu(JudokaComponent.MULTIPLAYER);
+			else if(selectedItem == 3) JudokaComponent.changeMenu(JudokaComponent.ABOUT);
+			else if(selectedItem == 4) JudokaComponent.changeMenu(JudokaComponent.EXIT);
 		}
 	}
 
+	public void init(){
+		super.init();
+		JudokaComponent.menuImage = JudokaComponent.mainMenuImage;
+	}
+	
 }

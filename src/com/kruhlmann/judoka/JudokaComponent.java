@@ -2,6 +2,7 @@ package com.kruhlmann.judoka;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -22,6 +23,7 @@ import com.kruhlmann.judoka.menu.About;
 import com.kruhlmann.judoka.menu.CreateGameAI;
 import com.kruhlmann.judoka.menu.CreateGameHuman;
 import com.kruhlmann.judoka.menu.Exit;
+import com.kruhlmann.judoka.menu.JudokaCreator;
 import com.kruhlmann.judoka.menu.Main;
 import com.kruhlmann.judoka.menu.Menu;
 import com.kruhlmann.judoka.menu.Multiplayer;
@@ -38,7 +40,7 @@ public class JudokaComponent extends Canvas implements Runnable{
 	public static final String VERSION = "Alpha 0.4.1";
 
 	public static final long serialVersionUID = 3250072112674679916L;
-	public static final boolean mute = false;
+	public static final boolean mute = true;
 	public static final int HEIGHT = 540;
 	public static final int WIDTH = 960;
 
@@ -66,6 +68,7 @@ public class JudokaComponent extends Canvas implements Runnable{
 		public static final Menu ABOUT = new About();
 		public static final Menu EXIT = new Exit();
 		public static final Menu MAIN = new Main();
+		public static final Menu CREATE_JUDOKA = new JudokaCreator();
 	
 	///Public non final variables///
 	public static boolean running;
@@ -82,10 +85,13 @@ public class JudokaComponent extends Canvas implements Runnable{
 	///BufferedImages///
 	public static BufferedImage characterSheet;
 	public static BufferedImage menuImage;
+	public static BufferedImage mainMenuImage;
+	public static BufferedImage createCharacterImage;
 	public static BufferedImage dojo1;
 	public static BufferedImage dojo2;
 	public static BufferedImage flag;
 	public static BufferedImage timeFlag;
+	public static BufferedImage pen;
 	
 		///Character///
 		public static BufferedImage judokaWalking1;
@@ -128,7 +134,9 @@ public class JudokaComponent extends Canvas implements Runnable{
 		menu = MAIN;
 		
 		try {
-		    menuImage = ImageIO.read(JudokaComponent.class.getResource("/img/main.png"));
+			pen = ImageIO.read(JudokaComponent.class.getResource("/img/pen.png"));
+			mainMenuImage = ImageIO.read(JudokaComponent.class.getResource("/img/main.png"));
+		    createCharacterImage = ImageIO.read(JudokaComponent.class.getResource("/img/createCharacterImage.png"));
 		    dojo1 = ImageIO.read(JudokaComponent.class.getResource("/img/dojo01.png"));
 		    dojo2 = ImageIO.read(JudokaComponent.class.getResource("/img/dojo02.png"));
 		    characterSheet = ImageIO.read(JudokaComponent.class.getResource("/img/character.png"));
@@ -165,6 +173,7 @@ public class JudokaComponent extends Canvas implements Runnable{
 			System.out.println("[Warning] Unable to load image files");
 		}
 		addKeyListener(input);	
+		menuImage = mainMenuImage;
 	}
 	
 	/**
@@ -273,7 +282,7 @@ public class JudokaComponent extends Canvas implements Runnable{
 		}else if(gameState == GameState.MULTI){
 			level.render(g);
 		}
-
+		
 		g.dispose();
 		bs.show();
 	}
@@ -312,6 +321,7 @@ public class JudokaComponent extends Canvas implements Runnable{
 	public static void changeMenuFromLevel(Menu m) {
 		gameState = GameState.MENU;
 		Sound.FIGHTING_MUSIC.stop();
+		Sound.ALT_FIGHTING_MUSIC.stop();
 		Sound.MUSIC_MENU.play(true);
 		Sound.HIT1.play(false);
 		changeMenu(m);
@@ -325,7 +335,8 @@ public class JudokaComponent extends Canvas implements Runnable{
 	 */
 	public static void changeLevel(boolean multiplayer, int dojo, int difficulty){
 		Sound.MUSIC_MENU.stop();
-		Sound.FIGHTING_MUSIC.play(true);
+		if(Sound.alternativeBattleMusic) Sound.ALT_FIGHTING_MUSIC.play(true);
+		else Sound.FIGHTING_MUSIC.play(true);
 		Sound.HAJIME.play(false);
 		if(!multiplayer)gameState = GameState.SINGLE;
 		else gameState = GameState.MULTI;
@@ -335,7 +346,7 @@ public class JudokaComponent extends Canvas implements Runnable{
 	/**
 	 * Flips a BufferedImage horizontally
 	 * @param img : image to be flipped
-	 * @return BufferedImage : F=flipped image
+	 * @return BufferedImage : flipped image
 	 */
 	public static BufferedImage getFlippedImage(BufferedImage img) {
 		AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
@@ -344,6 +355,14 @@ public class JudokaComponent extends Canvas implements Runnable{
 	        AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
 	    img = op.filter(img, null);
 	    return img;
+	}
+
+	public static void drawTextBox(int x, int y, int width, int height, int timer, String name, boolean focus, Graphics g) {
+		g.drawRect(x, y, width, height);
+		g.drawRect(x + 1, y + 1, width, height);
+		g.drawRect(x + 2, y + 2, width, height);
+		g.setColor(Color.WHITE);
+		g.fillRect(x + 3, y + 3, width - 3, height - 3);
 	}
 	
 }

@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import com.kruhlmann.judoka.JudokaComponent;
+import com.kruhlmann.judoka.JudokaComponent.GameState;
+import com.kruhlmann.judoka.sound.Sound;
 
 public class InputHandler implements KeyListener, FocusListener{
 
@@ -19,6 +21,7 @@ public class InputHandler implements KeyListener, FocusListener{
 	public boolean period;
 	public boolean backSpace;
 	public boolean escape;
+	public boolean hashtag;
 	
 	public boolean q,w,e,r,t,y,u,i,o,p,a,s,d,f,g,h,j,k,l,z,x,c,v,b,n,m;
 	public boolean k1,k2,k3,k4,k5,k6,k7,k8,k9,k0;
@@ -48,10 +51,17 @@ public class InputHandler implements KeyListener, FocusListener{
 			menuLeft 	= toggle(KeyEvent.VK_LEFT);
 			menuRight 	= toggle(KeyEvent.VK_RIGHT);
 		}
-		d = keys[KeyEvent.VK_D];
-		a = keys[KeyEvent.VK_A];
-		w = keys[KeyEvent.VK_W];
-		s = keys[KeyEvent.VK_S];
+		if(JudokaComponent.gameState == GameState.MENU){
+			d = toggle(KeyEvent.VK_D);
+			a = toggle(KeyEvent.VK_A);
+			w = toggle(KeyEvent.VK_W);
+			s = toggle(KeyEvent.VK_S);
+		}else{
+			d = keys[KeyEvent.VK_D];
+			a = keys[KeyEvent.VK_A];
+			w = keys[KeyEvent.VK_W];
+			s = keys[KeyEvent.VK_S];
+		}
 		
 		q = toggle(KeyEvent.VK_Q);
 		e = toggle(KeyEvent.VK_E);
@@ -75,7 +85,7 @@ public class InputHandler implements KeyListener, FocusListener{
 		b = toggle(KeyEvent.VK_B);
 		n = toggle(KeyEvent.VK_N);
 		m = toggle(KeyEvent.VK_M);
-
+		
 		k1 = toggle(KeyEvent.VK_1);
 		k2 = toggle(KeyEvent.VK_2);
 		k3 = toggle(KeyEvent.VK_3);
@@ -89,6 +99,11 @@ public class InputHandler implements KeyListener, FocusListener{
 		
 		backSpace = toggle(KeyEvent.VK_BACK_SPACE);
 		period = toggle(KeyEvent.VK_PERIOD);
+		
+		if(toggle(KeyEvent.VK_F3)) {
+			if(Sound.alternativeBattleMusic)Sound.alternativeBattleMusic = false;
+			else Sound.alternativeBattleMusic = true;
+		}
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -123,6 +138,47 @@ public class InputHandler implements KeyListener, FocusListener{
 			return true;
 		}
 		return false;
+	}
+	
+	public String getTypedKey(){
+		if(q) return "q";
+		if(w) return "w";
+		if(e) return "e";
+		if(r) return "r";
+		if(t) return "t";
+		if(y) return "y";
+		if(u) return "u";
+		if(i) return "i";
+		if(o) return "o";
+		if(p) return "p";
+		if(a) return "a";
+		if(s) return "s";
+		if(d) return "d";
+		if(f) return "f";
+		if(g) return "g";
+		if(h) return "h";
+		if(j) return "j";
+		if(k) return "k";
+		if(l) return "l";
+		if(z) return "z";
+		if(x) return "x";
+		if(c) return "c";
+		if(v) return "v";
+		if(b) return "b";
+		if(n) return "n";
+		if(m) return "m";
+		if(k1) return "1";
+		if(k2) return "2";
+		if(k3) return "3";
+		if(k4) return "4";
+		if(k5) return "5";
+		if(k6) return "6";
+		if(k7) return "7";
+		if(k8) return "8";
+		if(k9) return "9";
+		if(k0) return "0";
+		if(space) return " ";
+		return "";
 	}
 
 
