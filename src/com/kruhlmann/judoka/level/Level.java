@@ -138,7 +138,7 @@ public class Level {
 		
 		//Prevents interference from input while throwing
 		if(player1.playerState != PlayerState.GRIPPING && player1.playerState != PlayerState.NOT_GRIPPING){
-			JudokaComponent.input.flushPlayerInput();
+			JudokaComponent.input.flush();
 		}
 		
 		//Checks if the match is over and it should stop updating

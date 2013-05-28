@@ -1,55 +1,21 @@
 package com.kruhlmann.judoka.entity;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import com.kruhlmann.judoka.JudokaComponent;
-import com.kruhlmann.judoka.input.InputHandler;
 import com.kruhlmann.judoka.level.Level;
 import com.kruhlmann.judoka.sound.Sound;
-import com.kruhlmann.judoka.technique.Technique;
 
-public class Player2{
-	
-	public Technique currentTechnique;
-	public PlayerState playerState;
-	public BufferedImage playerImage;	
-	
-	public boolean moving;
-	public int ippons, wazaaris, yukos, shidos;
-	public int energy = 400;
-	public int x;
-	public int y;
-	public int cooldown = 0;
-	
-	//Techniques
-	public Technique forward = Technique.O_SOTO_GARI;
-	public Technique backward = Technique.UCHI_MATA;
-	public Technique backwardUp = Technique.MOROTE_SEOI_NAGE;
-	
-	private InputHandler input = JudokaComponent.input;
-	private Level level;
-	
-	//Timing
-	private int throwTimer;
-	private int standTimer;
-	private int moveTimer;
-	private int moveCount;
-	private int endThrowTimer;
+public class Player2 extends Entity{
 	
 	public Player2(BufferedImage playerImage, Level level) {
-		this.playerImage = playerImage;
-		this.level = level;
-		playerState = PlayerState.NOT_GRIPPING;
-		
+		super(playerImage, level);
 		x = level.getDojoBorder(false, level.dojo);
-		y = level.getDojoYOffSet();
 	}
 	
 	public void render(int x, int y, Graphics g){
-		g.setColor(new Color(255, 255, 158));
-		if(!level.matchIsOver) g.fillRect(x + 120 / 4, y, cooldown, 20);
+		super.render(g);
 		renderImage(x, y, g);
 	}
 	
@@ -105,7 +71,7 @@ public class Player2{
 				else if	(throwTimer % 120 < 120) playerImage = level.player1.currentTechnique.OPPONENT_ANIMATION.SPRITES[2];
 			}
 			if(throwTimer > 120 && playerState == PlayerState.THROWING){
-				currentTechnique.performOnP1(level);
+				currentTechnique.perform(level.player1, this);
 				throwTimer = 0;
 				if(currentTechnique.SUCCESS){
 					playerState = PlayerState.MATTE;

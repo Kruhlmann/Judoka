@@ -1,53 +1,20 @@
 package com.kruhlmann.judoka.entity;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import com.kruhlmann.judoka.JudokaComponent;
-import com.kruhlmann.judoka.input.InputHandler;
 import com.kruhlmann.judoka.level.Level;
-import com.kruhlmann.judoka.technique.Technique;
 
-public class Player {
-	public Technique currentTechnique;
-	public PlayerState playerState;
-	public BufferedImage playerImage;	
-	
-	public boolean moving;
-	public int ippons, wazaaris, yukos, shidos;
-	public int energy = 400;
-	public int x;
-	public int y = JudokaComponent.HEIGHT - 294;
-	public int cooldown = 0;
-	
-	//Techniques
-	public Technique forward = Technique.O_SOTO_GARI;
-	public Technique backward = Technique.UCHI_MATA;
-	public Technique backwardUp = Technique.MOROTE_SEOI_NAGE;
-	
-	private InputHandler input = JudokaComponent.input;
-	private Level level;
-	
-	//Timing
-	private int throwTimer;
-	private int moveTimer;
-	private int standTimer;
-	private int moveCount;
-	private int endThrowTimer;
+public class Player extends Entity{
 	
 	public Player(BufferedImage playerImage, Level level) {
-		this.level = level;
-		this.playerImage = playerImage;
-		playerState = PlayerState.NOT_GRIPPING;
-		
+		super(playerImage, level);
 		x = level.getDojoBorder(true, level.dojo);
-		y = level.getDojoYOffSet();
 	}
 	
 	public void render(int x, int y, Graphics g){
-		g.setColor(new Color(255, 255, 158));
-		if(!level.matchIsOver) g.fillRect(x + 120 / 4, y, cooldown, 20);
+		super.render(g);
 		g.drawImage(playerImage, x, y, 16 * level.getDojoScale(level.dojo), 24 * level.getDojoScale(level.dojo), null);
 	}
 	
@@ -115,7 +82,7 @@ public class Player {
 				playerImage = JudokaComponent.judokaLost;
 			}
 			if(throwTimer > 120 && playerState == PlayerState.THROWING){
-				currentTechnique.performOnP2(level);
+				currentTechnique.perform(level.player2, this);
 				throwTimer = 0;
 				if(currentTechnique.SUCCESS){
 					playerState = PlayerState.MATTE;
@@ -189,17 +156,5 @@ public class Player {
 		if(endThrowTimer == Integer.MAX_VALUE) 	endThrowTimer = 0;
 		if(cooldown <= 0) 						cooldown = 0;
 	}
-	
-	/**
-	 * Get x position
-	 * @return int x
-	 */
-	public int getX(){ return x; }
-	
-	/**
-	 * get y position
-	 * @return int y
-	 */
-	public int getY(){ return y; }
 
 }

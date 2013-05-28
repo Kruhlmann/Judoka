@@ -114,9 +114,7 @@ public class InputHandler implements KeyListener, FocusListener{
 
 	public void focusLost(FocusEvent arg0) {
 		focused = false;
-		for(int i = 0; i < keys.length; i++){
-			keys[i] = false;
-		}
+		flush();
 	}
 	
 	private boolean toggle(int key) {
@@ -127,17 +125,5 @@ public class InputHandler implements KeyListener, FocusListener{
 		return false;
 	}
 
-	public void flushPlayerInput() {
-		w = false;
-		s = false;
-		d = false;
-		a = false;
-		enter = false;
-		space = false;
-		up = false;
-		down = false;
-		left = false;
-		right = false;
-	}
 
 }

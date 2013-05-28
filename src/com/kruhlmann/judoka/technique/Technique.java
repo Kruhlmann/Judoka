@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.kruhlmann.judoka.JudokaComponent;
-import com.kruhlmann.judoka.entity.Player;
-import com.kruhlmann.judoka.entity.Player2;
+import com.kruhlmann.judoka.entity.Entity;
 import com.kruhlmann.judoka.graphics.Animation;
-import com.kruhlmann.judoka.level.Level;
 import com.kruhlmann.judoka.sound.Sound;
 
 public class Technique {
@@ -119,96 +117,41 @@ public class Technique {
 		this.NAME = NAME;
 		random = new Random();
 	}
-	/**
-	 * Performs the technique at player2
-	 * @param self : the player doing technique
-	 * @param target : the player the technique is being done at
-	 */
-	public void performOnP2(Level level){
-		this.SUCCESS = false;
-		this.BROKE_GRIB = false;
-		
-		//Logic
-		Player2 p2 = level.player2;
-		Player p1 = level.player1;
-		p1.cooldown = 120;
-		
-		int roll = random.nextInt(100);
-		
-		roll += ((400 - p1.energy) / 4);
-		System.out.println((400 - p1.energy) / 8);
-		
-		if(roll < this.SUCCESS_RATE){
-			System.out.println(NAME + " was successful");
-			JudokaComponent.techniqueTimer = JudokaComponent.timer;
-			p2.energy -= this.ENERGY_LOST_ON_SUCCESS;
-			if(roll <= this.YUKO_CHANCE && roll > this.WAZA_CHANCE){
-				System.out.println("Player 1 scored a yuko with " + NAME);
-				p1.yukos ++;
-				this.SUCCESS = true;
-			}
-			else if(roll <= this.WAZA_CHANCE && roll > this.IPPON_CHANCE){
-				System.out.println("Player 1 scored a waza with " + NAME);
-				p1.wazaaris ++;
-				this.SUCCESS = true;
-			}
-			else if(roll <= this.IPPON_CHANCE){
-				System.out.println("Player 1 scored a ippon with " + NAME);
-				p1.ippons ++;
-				this.SUCCESS = true;
-			}else{
-				Sound.HIT3.play(false);
-			}
-			if(SUCCESS) 
-				Sound.HIT2.play(false);
-		}else{
-			System.out.println(NAME + " failed!");
-			Sound.HIT4.play(false);
-			p1.energy -= this.ENERGY_LOST_ON_FAILURE;
-			roll = random.nextInt(100);
-			if(roll < this.GRIB_BREAK_CHANCE && this.CAN_BREAK_GRIB){
-				System.out.println(NAME + " broke the grib");
-				this.BROKE_GRIB = true;
-			}
-		}
-	}
 	
 	/**
-	 * Performs the technique at player1
+	 * Performs the technique at an entity
 	 * @param self : the player doing technique
 	 * @param target : the player the technique is being done at
 	 */
-	public void performOnP1(Level level){
+	public void perform(Entity target, Entity self){
 		this.SUCCESS = false;
 		this.BROKE_GRIB = false;
 		
 		//Logic
-		Player2 p2 = level.player2;
-		Player p1 = level.player1;
-		p2.cooldown = 120;
+		self.cooldown = 120;
 		
 		int roll = random.nextInt(100);
 		
-		roll += ((400 - p1.energy) / 4);
-		System.out.println((400 - p1.energy) / 8);
+		roll += ((400 - target.energy) / 4);
+		System.out.println((400 - target.energy) / 8);
 				
 		if(roll < this.SUCCESS_RATE){
 			System.out.println(NAME + " was successful");
 			JudokaComponent.techniqueTimer = JudokaComponent.timer;
-			p1.energy -= this.ENERGY_LOST_ON_SUCCESS;
+			target.energy -= this.ENERGY_LOST_ON_SUCCESS;
 			if(roll <= this.YUKO_CHANCE && roll > this.WAZA_CHANCE){
 				System.out.println("Player 2 scored a yuko with " + NAME);
-				p2.yukos ++;
+				self.yukos ++;
 				this.SUCCESS = true;
 			}
 			else if(roll <= this.WAZA_CHANCE && roll > this.IPPON_CHANCE){
 				System.out.println("Player 2 scored a waza with " + NAME);
-				p2.wazaaris ++;
+				self.wazaaris ++;
 				this.SUCCESS = true;
 			}
 			else if(roll <= this.IPPON_CHANCE){
 				System.out.println("Player 2 scored a ippon with " + NAME);
-				p2.ippons ++;
+				self.ippons ++;
 				this.SUCCESS = true;
 			}else{
 				Sound.HIT3.play(false);
@@ -218,7 +161,7 @@ public class Technique {
 		}else{
 			System.out.println(NAME + " failed!");
 			Sound.HIT4.play(false);
-			p2.energy -= this.ENERGY_LOST_ON_FAILURE;
+			self.energy -= this.ENERGY_LOST_ON_FAILURE;
 			roll = random.nextInt(100);
 			if(roll < this.GRIB_BREAK_CHANCE && this.CAN_BREAK_GRIB){
 				System.out.println(NAME + " broke the grib");
