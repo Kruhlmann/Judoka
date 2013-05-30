@@ -190,7 +190,7 @@ public class Level {
 		}
 		
 		//Shido check
-		if(player1.x < getDojoBorder(true, dojo) - (player1.playerImage.getWidth() * getDojoScale(dojo) * 0.8)) {
+		if (player1.x < getDojoBorder(true,dojo) - (player1.getPlayerImage().getWidth() * (int) (getDojoScale(dojo) * 0.8))) {
 			player1.shidos ++;
 			if(player1.shidos > 3){
 				Sound.HANSOKUMAKE.play(false);
@@ -200,7 +200,7 @@ public class Level {
 				Sound.SHIDO.play(false);
 			}
 		}
-		if(player2.x > getDojoBorder(false, dojo) + (player1.playerImage.getWidth() * getDojoScale(dojo))) {
+		if(player2.x > getDojoBorder(false, dojo) + (player1.getPlayerImage().getWidth() * getDojoScale(dojo))) {
 			player2.shidos ++;
 			if(player2.shidos > 3){
 				Sound.HANSOKUMAKE.play(false);

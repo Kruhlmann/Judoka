@@ -50,36 +50,36 @@ public class Player extends Entity{
 		//Image determination
 		if(moving){
 			if(playerState == PlayerState.GRIPPING || playerState == PlayerState.NOT_GRIPPING) {
-				if(moveTimer % 30 < 15) playerImage = JudokaComponent.judokaWalking1;
-				else playerImage = JudokaComponent.judokaWalking2;
+				if(moveTimer % 30 < 15) setPlayerImage(JudokaComponent.judokaWalking1);
+				else setPlayerImage(JudokaComponent.judokaWalking2);
 			}
 		}else{
 			if(playerState == PlayerState.GRIPPING || playerState == PlayerState.NOT_GRIPPING) {
-				if(standTimer % 40 < 20) playerImage = JudokaComponent.judokaStanding1;
-				else playerImage = JudokaComponent.judokaStanding2;
+				if(standTimer % 40 < 20) setPlayerImage(JudokaComponent.judokaStanding1);
+				else setPlayerImage(JudokaComponent.judokaStanding2);
 			}
 			//Throw animation
 			if(playerState == PlayerState.THROWING){
-				if		(throwTimer % 120 < 40) playerImage = currentTechnique.ANIMATION.SPRITES[0];
-				else if	(throwTimer % 120 < 80) playerImage = currentTechnique.ANIMATION.SPRITES[1];
-				else if	(throwTimer % 120 < 120) playerImage = currentTechnique.ANIMATION.SPRITES[2];
+				if		(throwTimer % 120 < 40) setPlayerImage(currentTechnique.ANIMATION.SPRITES[0]);
+				else if	(throwTimer % 120 < 80) setPlayerImage(currentTechnique.ANIMATION.SPRITES[1]);
+				else if	(throwTimer % 120 < 120) setPlayerImage(currentTechnique.ANIMATION.SPRITES[2]);
 			}else if(playerState == PlayerState.BEING_THROWN){
-				if		(throwTimer % 120 < 40) playerImage = level.player2.currentTechnique.OPPONENT_ANIMATION.SPRITES[0];
-				else if	(throwTimer % 120 < 80) playerImage = level.player2.currentTechnique.OPPONENT_ANIMATION.SPRITES[1];
-				else if	(throwTimer % 120 < 120) playerImage = level.player2.currentTechnique.OPPONENT_ANIMATION.SPRITES[2];
+				if		(throwTimer % 120 < 40) setPlayerImage(level.player2.currentTechnique.OPPONENT_ANIMATION.SPRITES[0]);
+				else if	(throwTimer % 120 < 80) setPlayerImage(level.player2.currentTechnique.OPPONENT_ANIMATION.SPRITES[1]);
+				else if	(throwTimer % 120 < 120) setPlayerImage(level.player2.currentTechnique.OPPONENT_ANIMATION.SPRITES[2]);
 			}
 			//END throw animation
 			if(playerState == PlayerState.MATTE){
-				playerImage = JudokaComponent.judokaMatte;
+				setPlayerImage(JudokaComponent.judokaMatte);
 			}
 			if(playerState == PlayerState.THROWN){
-				playerImage = JudokaComponent.judokaFallen;
+				setPlayerImage(JudokaComponent.judokaFallen);
 			}
 			if(playerState == PlayerState.WINNER){
-				playerImage = JudokaComponent.judokaMatte;
+				setPlayerImage(JudokaComponent.judokaMatte);
 			}
 			if(playerState == PlayerState.LOSER){
-				playerImage = JudokaComponent.judokaLost;
+				setPlayerImage(JudokaComponent.judokaLost);
 			}
 			if(throwTimer > 120 && playerState == PlayerState.THROWING){
 				currentTechnique.perform(level.player2, this);

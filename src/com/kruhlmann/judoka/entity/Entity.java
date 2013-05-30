@@ -14,7 +14,7 @@ public class Entity {
 	
 	public Technique currentTechnique;
 	public PlayerState playerState;
-	public BufferedImage playerImage;	
+	protected BufferedImage playerImage;	
 	
 	public boolean moving;
 	public int ippons, wazaaris, yukos, shidos;
@@ -61,5 +61,16 @@ public class Entity {
 		g.setColor(new Color(255, 255, 158));
 		if(!level.matchIsOver) g.fillRect(x + 120 / 4, y, cooldown, 20);
 	}
+	
 	public void update(){}
+	
+	public void setPlayerImage(BufferedImage playerImage){
+		if (playerImage == null) throw new RuntimeException("Set player image to null.");
+		this.playerImage = playerImage;
+	}
+	
+	public BufferedImage getPlayerImage(){
+		return playerImage;
+	}
+	
 }

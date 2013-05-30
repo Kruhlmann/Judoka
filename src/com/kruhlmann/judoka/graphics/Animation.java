@@ -2,24 +2,31 @@ package com.kruhlmann.judoka.graphics;
 
 import java.awt.image.BufferedImage;
 
-import com.kruhlmann.judoka.JudokaComponent;
-
 public class Animation {
 	
-	public static final Animation MOROTE_SEOI_NAGE = new Animation(JudokaComponent.MOROTE1, JudokaComponent.MOROTE2, JudokaComponent.MOROTE3);
-	public static final Animation morote_seoi_nage = new Animation(JudokaComponent.judokaStanding1, JudokaComponent.judokaStanding2, JudokaComponent.judokaStanding1);
+	public static Animation MOROTE_SEOI_NAGE;
+	public static Animation morote_seoi_nage;
+	
+	public static Animation UCHI_MATA;
+	public static Animation uchi_mata;
+	
+	public static Animation O_SOTO_GARI;
+	public static Animation o_soto_gari;
+
 	
 	public int ID;
 	public BufferedImage[] SPRITES;
 	
-	public static Animation UCHI_MATA = new Animation(JudokaComponent.uchiMata1, JudokaComponent.uchiMata2, JudokaComponent.uchiMata3);
-	public static Animation uchi_mata = new Animation(JudokaComponent.judokaStanding1, JudokaComponent.judokaStanding2, JudokaComponent.judokaStanding1);
-
-	public static Animation O_SOTO_GARI = new Animation(JudokaComponent.oSotoGari1, JudokaComponent.oSotoGari2, JudokaComponent.oSotoGari3);
-	public static Animation o_soto_gari = new Animation(JudokaComponent.judokaStanding1, JudokaComponent.judokaStanding2, JudokaComponent.judokaStanding1);
-	
 	public Animation(BufferedImage step1, BufferedImage step2, BufferedImage step3){
+		if(step1 == null || step2 == null || step3 == null) {
+			if(step1 == null) System.err.print("Step 1 was NPE. Address: " + this + "\n");
+			if(step2 == null) System.err.print("Step 2 was NPE. Address: " + this + "\n");
+			if(step3 == null) System.err.print("Step 3 was NPE. Address: " + this + "\n");
+			throw new RuntimeException("Animation NEP");
+		}
 		BufferedImage[] SPRITES = {step1, step2, step3};
 		this.SPRITES = SPRITES;
 	}
+	
+	
 }
