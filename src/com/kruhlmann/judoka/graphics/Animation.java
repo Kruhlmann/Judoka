@@ -24,8 +24,7 @@ public class Animation {
 			if(step3 == null) System.err.print("Step 3 was NPE. Address: " + this + "\n");
 			throw new RuntimeException("Animation NEP");
 		}
-		BufferedImage[] SPRITES = {step1, step2, step3};
-		this.SPRITES = SPRITES;
+		SPRITES = new BufferedImage[]{step1, step2, step3};
 	}
 	
 	

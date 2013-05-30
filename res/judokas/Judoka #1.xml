@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Judoka>
+    <techniques>
+        <up>1</up>
+        <down>1</down>
+        <back>1</back>
+        <back-up>2</back-up>
+        <back-down>1</back-down>
+        <forward>1</forward>
+        <forward-up>1</forward-up>
+        <forward-down>1</forward-down>
+    </techniques>
+</Judoka>

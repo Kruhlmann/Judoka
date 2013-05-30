@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 
 import com.kruhlmann.judoka.graphics.Animation;
 import com.kruhlmann.judoka.input.InputHandler;
+import com.kruhlmann.judoka.input.PropertyFileHandler;
 import com.kruhlmann.judoka.level.Level;
 import com.kruhlmann.judoka.menu.About;
 import com.kruhlmann.judoka.menu.CreateGameAI;
@@ -29,6 +30,7 @@ import com.kruhlmann.judoka.menu.Main;
 import com.kruhlmann.judoka.menu.Menu;
 import com.kruhlmann.judoka.menu.Multiplayer;
 import com.kruhlmann.judoka.menu.Singleplayer;
+import com.kruhlmann.judoka.menu.TechniquePicker;
 import com.kruhlmann.judoka.sound.Sound;
 import com.kruhlmann.judoka.technique.Technique;
 
@@ -48,6 +50,7 @@ public class JudokaComponent extends Canvas implements Runnable{
 
 	///Object creation///
 	public static BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+	public static PropertyFileHandler propertyFileHandler;
 	public static GameState gameState;
 	public static BufferStrategy bs;
 	public static InputHandler input;
@@ -70,7 +73,8 @@ public class JudokaComponent extends Canvas implements Runnable{
 		public static final Menu ABOUT = new About();
 		public static final Menu EXIT = new Exit();
 		public static final Menu MAIN = new Main();
-		public static final Menu CREATE_JUDOKA = new JudokaCreator();
+		public static final JudokaCreator CREATE_JUDOKA = new JudokaCreator();
+		public static final Menu TECHNIQUE_PICKER = new TechniquePicker();
 	
 	///Public non final variables///
 	public static boolean running;
@@ -133,6 +137,7 @@ public class JudokaComponent extends Canvas implements Runnable{
 		pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 		input = new InputHandler();
 		menu = new Menu();
+		propertyFileHandler = new PropertyFileHandler();
 		menu = MAIN;
 		
 		try {
@@ -322,6 +327,17 @@ public class JudokaComponent extends Canvas implements Runnable{
 	}
 	
 	/**
+	 * Changes the current menu shown and updated, + inits with an integer
+	 * @param m : menu to be changed
+	 */
+	public static void changeMenu(Menu m, Object[] param) {
+		Sound.HIT1.play(false);
+		menu = m;
+		m.init(param);
+		input.flush();
+	}
+	
+	/**
 	 * Changes from level to menu
 	 * @param m : menu to return to
 	 */
@@ -364,7 +380,7 @@ public class JudokaComponent extends Canvas implements Runnable{
 	    return img;
 	}
 
-	public static void drawTextBox(int x, int y, int width, int height, int timer, String name, boolean focus, Graphics g) {
+	public static void drawTextBox(int x, int y, int width, int height, Graphics g) {
 		g.drawRect(x, y, width, height);
 		g.drawRect(x + 1, y + 1, width, height);
 		g.drawRect(x + 2, y + 2, width, height);
@@ -389,7 +405,38 @@ public class JudokaComponent extends Canvas implements Runnable{
 	    Technique.UCHI_MATA = new Technique(1, 35, 29, 25, Animation.UCHI_MATA, Animation.uchi_mata, 50, 40, 0, 20, 25, 30, 20, 20, false, true, true, false, null, null, "Uchi Mata");
 	    Technique.MOROTE_SEOI_NAGE = new Technique(2, 45, 37, 15, Animation.MOROTE_SEOI_NAGE, Animation.morote_seoi_nage, 60, 0, 10, 8, 7, 15, 20, 15, false, false, true, true, null, null, "Morote Seoi Nage");
 	    Technique.ERI_SEOI_NAGE = new Technique(3, 50, 40, 12, Animation.MOROTE_SEOI_NAGE, Animation.morote_seoi_nage, 60, 0, 15, 7, 7, 15, 10, 10, false, false, true, true, null, null, "Eri Seoi Nage");
-
+	    Technique.techniquesBack = new Technique[]{
+			Technique.UCHI_MATA,
+			null, // Harai goshi
+			null, // O goshi
+			Technique.MOROTE_SEOI_NAGE,
+			Technique.ERI_SEOI_NAGE,
+			null, //Ippon seoi nage
+			null, //Tai otoshi
+			null, //Sode makekomi
+			null, //Koshi guruma
+			null //Sode tsurikomi goshi
+		};
+		
+		Technique.techniquesForward = new Technique[]{
+				Technique.O_SOTO_GARI,
+				null, //Ko uchi gari
+				null, //Ko soto gake
+				null, //Ko uchi gake
+				null, //Ko uchi makekomi
+				null, //Harai tsurikomi ashi
+				null, //O uchi gari
+				null, //De ashi barai
+				null, //Okouri ashi barai
+		};
+		
+		Technique.techniquesUp = new Technique[]{
+				null, //Ura nage
+		};
+		
+		Technique.techniquesDown = new Technique[]{
+				null, //Tani otoshi
+		};
 	}
 	
 }

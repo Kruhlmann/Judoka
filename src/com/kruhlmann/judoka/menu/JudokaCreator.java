@@ -3,14 +3,19 @@ package com.kruhlmann.judoka.menu;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import com.kruhlmann.judoka.JudokaComponent;
+import com.kruhlmann.judoka.menu.Menu;
 import com.kruhlmann.judoka.technique.Technique;
 
 public class JudokaCreator extends Menu{
 
 	public String name = "Judoka #1"; // 16 max length
-	public int timer;
+	public int timer, saveTimer;
 	public String[] techniqueTitle = {
 			"Up",
 			"Down",
@@ -22,15 +27,16 @@ public class JudokaCreator extends Menu{
 			"Forward + Down"
 	};
 	
+	//public Technique[] techniques = new Technique[8];
 	public Technique[] techniques = {
-		null,
-		Technique.UCHI_MATA,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
+			Technique.UCHI_MATA,
+			Technique.UCHI_MATA,
+			Technique.UCHI_MATA,
+			Technique.UCHI_MATA,
+			Technique.UCHI_MATA,
+			Technique.UCHI_MATA,
+			Technique.UCHI_MATA,
+			Technique.UCHI_MATA
 	};
 	
 	/**
@@ -46,8 +52,7 @@ public class JudokaCreator extends Menu{
 	public void render(Graphics g){
 		g.setColor(Color.BLACK);
 		g.setFont(JudokaComponent.bigFont);
-		if(selectedItem == -1)JudokaComponent.drawTextBox(170, 160, 350, 35, timer, name, true, g);
-		else JudokaComponent.drawTextBox(170, 160, 350, 35, timer, name, false, g);
+		JudokaComponent.drawTextBox(170, 160, 350, 35, g);
 			
 		g.drawImage(JudokaComponent.judokaMatte, 640, 120, 160, 240, null);
 		
@@ -91,6 +96,14 @@ public class JudokaCreator extends Menu{
 			
 			
 		}
+		if(saveTimer < 180) {
+			g.setColor(Color.LIGHT_GRAY);
+			g.fillRect(700, JudokaComponent.HEIGHT - 100, 145, 200);
+			g.setColor(Color.WHITE);
+			g.setFont(JudokaComponent.stdFont);
+			g.drawString("Saved!", 730, JudokaComponent.HEIGHT - 60);
+			g.setColor(Color.BLACK);
+		}
 	}
 	
 
@@ -98,6 +111,7 @@ public class JudokaCreator extends Menu{
 	 * Updates the menu logic
 	 */
 	public void update(){
+		if(saveTimer < 300) saveTimer ++;
 		timer ++;
 		
 		if(JudokaComponent.input.up) selectedItem --;
@@ -115,6 +129,31 @@ public class JudokaCreator extends Menu{
 			if(name.length() > 16) name = name.substring(0, name.length() - 1);
 		}
 		
+		if(JudokaComponent.input.enter) {
+			if(selectedItem > 1 && selectedItem < 5)JudokaComponent.changeMenu(JudokaComponent.TECHNIQUE_PICKER, new Object[]{0, selectedItem});
+			else if(selectedItem > 4 && selectedItem != 8)JudokaComponent.changeMenu(JudokaComponent.TECHNIQUE_PICKER, new Object[]{1, selectedItem});
+			else if(selectedItem == 0)JudokaComponent.changeMenu(JudokaComponent.TECHNIQUE_PICKER, new Object[]{3, selectedItem});
+			else if(selectedItem == 1)JudokaComponent.changeMenu(JudokaComponent.TECHNIQUE_PICKER, new Object[]{4, selectedItem});
+			else if(selectedItem == 8){
+				boolean notReadyToSave = false;
+				for(Technique t: techniques) {
+					if(t == null ) notReadyToSave = true;
+				}
+				if (!notReadyToSave){
+					try {
+						JudokaComponent.propertyFileHandler.saveJudoka(techniques, name);
+						displaySuccessfulSave();
+					} catch (FileNotFoundException e) { e.printStackTrace();
+					} catch (ParserConfigurationException e) { e.printStackTrace();
+					} catch (IOException e) { e.printStackTrace(); 
+					}
+				}
+			}
+		}
+		
+		
+		
+		
 		//Overflow handler
 		if(timer == Integer.MAX_VALUE) timer = 0;
 	}
@@ -122,6 +161,14 @@ public class JudokaCreator extends Menu{
 	public void init(){
 		selectedItem = -1;
 		JudokaComponent.menuImage = JudokaComponent.createCharacterImage;
+	}
+	
+	public void setTechnique(int index, Technique technique){
+		techniques[index] = technique;
+	}
+	
+	public void displaySuccessfulSave(){
+		saveTimer = 0;
 	}
 
 }

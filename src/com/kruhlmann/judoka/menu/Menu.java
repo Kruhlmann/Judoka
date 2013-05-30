@@ -16,5 +16,6 @@ public class Menu {
 	public void init(){ 
 		selectedItem = 0;
 	}
-	
+	public void init(Object[] param){
+	}
 }

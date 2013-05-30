@@ -15,8 +15,10 @@ public class Technique {
 	public static Technique MOROTE_SEOI_NAGE = new Technique(2, 45, 37, 15, Animation.MOROTE_SEOI_NAGE, Animation.morote_seoi_nage, 60, 0, 10, 8, 7, 15, 20, 15, false, false, true, true, null, null, "Morote Seoi Nage");
 	public static Technique ERI_SEOI_NAGE = new Technique(3, 50, 40, 12, Animation.MOROTE_SEOI_NAGE, Animation.morote_seoi_nage, 60, 0, 15, 7, 7, 15, 10, 10, false, false, true, true, null, null, "Eri Seoi Nage");
 	
-	
-	
+	public static Technique[] techniquesBack;
+	public static Technique[] techniquesForward;
+	public static Technique[] techniquesUp;
+	public static Technique[] techniquesDown;
 	
 	public int ID;
 	public int YUKO_CHANCE;
@@ -116,10 +118,6 @@ public class Technique {
 		this.CAN_COUNTER_TECHNIQUES = CAN_COUNTER_TECHNIQUES;
 		this.NAME = NAME;
 		random = new Random();
-	}
-	
-	public static void check(){
-		System.out.println(UCHI_MATA.NAME);
 	}
 	
 	/**
