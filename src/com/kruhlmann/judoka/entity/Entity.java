@@ -3,6 +3,11 @@ package com.kruhlmann.judoka.entity;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import com.kruhlmann.judoka.JudokaComponent;
 import com.kruhlmann.judoka.input.InputHandler;
@@ -23,10 +28,7 @@ public class Entity {
 	public int y;
 	public int cooldown = 0;
 	
-	//Techniques
-	public Technique forward = Technique.O_UCHI_GARI;
-	public Technique backward = Technique.UCHI_MATA;
-	public Technique backwardUp = Technique.MOROTE_SEOI_NAGE;
+	public Technique[] techniques = new Technique[8];
 	
 	protected InputHandler input = JudokaComponent.input;
 	protected Level level;
@@ -38,11 +40,20 @@ public class Entity {
 	protected int moveCount;
 	protected int endThrowTimer;
 	
-	public Entity(BufferedImage playerImage, Level level){
+	public Entity(BufferedImage playerImage, Level level, String name){
 		this.playerImage = playerImage;
 		this.level = level;
-		playerState = PlayerState.NOT_GRIPPING;
-		y = level.getDojoYOffSet();
+		try {
+			this.techniques = JudokaComponent.propertyFileHandler.loadPlayerTechniques(name);
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+		this.playerState = PlayerState.NOT_GRIPPING;
+		this.y = level.getDojoYOffSet();
 	}
 	
 	/**
@@ -71,6 +82,10 @@ public class Entity {
 	
 	public BufferedImage getPlayerImage(){
 		return playerImage;
+	}
+	
+	public void setTechniques(Technique[] techniques){
+		this.techniques = techniques;
 	}
 	
 }

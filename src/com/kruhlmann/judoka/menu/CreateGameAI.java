@@ -59,7 +59,7 @@ public class CreateGameAI extends Menu {
 		if(JudokaComponent.input.menuDown) selectedItem ++;
 		if(selectedItem > items.length - 1) selectedItem = items.length - 1;
 		if(selectedItem < 0) selectedItem = 0;
-		if(JudokaComponent.input.enter && selectedItem == 0) JudokaComponent.changeLevel(false, dojo, difficulty);
+		//if(JudokaComponent.input.enter && selectedItem == 0) JudokaComponent.changeLevel(false, dojo, difficulty);
 		else if(JudokaComponent.input.enter && selectedItem == 1) difficulty ++;
 		else if(JudokaComponent.input.enter && selectedItem == 2) dojo ++;
 		else if(JudokaComponent.input.enter && selectedItem == 3) JudokaComponent.changeMenu(JudokaComponent.SINGLEPLAYER);

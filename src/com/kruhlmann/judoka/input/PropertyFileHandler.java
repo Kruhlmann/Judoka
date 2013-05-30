@@ -32,19 +32,16 @@ public class PropertyFileHandler {
 		Document XMLDocument = docbuilder.newDocument();
 		
 		Element rootElement = XMLDocument.createElement("Judoka");
-		Element mainElement = XMLDocument.createElement("techniques");
 
-		mainElement.appendChild(setOptionAttribute("up", "" + techniques[0].ID, XMLDocument));
-		mainElement.appendChild(setOptionAttribute("down", "" + techniques[1].ID, XMLDocument));
-		mainElement.appendChild(setOptionAttribute("back", "" + techniques[2].ID, XMLDocument));
-		mainElement.appendChild(setOptionAttribute("back-up", "" + techniques[3].ID, XMLDocument));
-		mainElement.appendChild(setOptionAttribute("back-down", "" + techniques[4].ID, XMLDocument));
-		mainElement.appendChild(setOptionAttribute("forward", "" + techniques[5].ID, XMLDocument));
-		mainElement.appendChild(setOptionAttribute("forward-up", "" + techniques[6].ID, XMLDocument));
-		mainElement.appendChild(setOptionAttribute("forward-down", "" + techniques[7].ID, XMLDocument));
+		rootElement.appendChild(setOptionAttribute("up", "" + techniques[0].ID, XMLDocument));
+		rootElement.appendChild(setOptionAttribute("down", "" + techniques[1].ID, XMLDocument));
+		rootElement.appendChild(setOptionAttribute("back", "" + techniques[2].ID, XMLDocument));
+		rootElement.appendChild(setOptionAttribute("back-up", "" + techniques[3].ID, XMLDocument));
+		rootElement.appendChild(setOptionAttribute("back-down", "" + techniques[4].ID, XMLDocument));
+		rootElement.appendChild(setOptionAttribute("forward", "" + techniques[5].ID, XMLDocument));
+		rootElement.appendChild(setOptionAttribute("forward-up", "" + techniques[6].ID, XMLDocument));
+		rootElement.appendChild(setOptionAttribute("forward-down", "" + techniques[7].ID, XMLDocument));
 		
-		
-		rootElement.appendChild(mainElement);
 		XMLDocument.appendChild(rootElement);
 		
 		OutputFormat outputFormat = new OutputFormat(XMLDocument);
@@ -63,30 +60,51 @@ public class PropertyFileHandler {
 		return attributeName;
 	}
 	
-	public Technique[] getTechniquesFromXML(String tag){
-		/*
-		try{
-			DocumentBuilderFactory doc = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docbuilder = doc.newDocumentBuilder();
-			Document XMLDocument = docbuilder.parse("res/judokas/properties.xml");
-			XMLDocument.normalize();
-			
-			NodeList rootOptions = XMLDocument.getElementsByTagName("options");
-			Element rootOption = (Element) rootOptions.item(0);
-			
-			NodeList options = rootOption.getElementsByTagName("option");
-			Element indexElement = (Element) options.item(0);
-			return indexElement.getElementsByTagName(tag).item(0).getTextContent();
-		}catch (IOException e) {
-			System.out.println("[ERROR] COULD NOT PARSE FILE LOCATION TO XML DOCUMENT");
-		}catch (ParserConfigurationException e) {
-			System.out.println("[ERROR] UNABLE TO CONFIGURE DOCUMENT BUILDER");
-		}catch (SAXException e) {
-			System.out.println("[ERROR] XML DOCUMENT FORMATTING WAS UNREADABLE");
-		}
-		return "";
-		*/
-		return null;
+	public Technique[] loadPlayerTechniques(String name) throws SAXException, IOException, ParserConfigurationException{
+		Technique[] techniques = new Technique[8];
+		String id = null;
+		Document doc;
+		DocumentBuilderFactory docBuildFact = DocumentBuilderFactory.newInstance();
+		
+		DocumentBuilder docBuilder = docBuildFact.newDocumentBuilder();
+		doc = docBuilder.parse("res/judokas/" + name + ".xml");
+		Element docElement = doc.getDocumentElement();
+		
+		id = getTextValue(id, docElement, "up");
+		techniques[0] = Technique.getTechnique(Integer.parseInt(id));
+
+		id = getTextValue(id, docElement, "down");
+		techniques[1] = Technique.getTechnique(Integer.parseInt(id));
+
+		id = getTextValue(id, docElement, "back");
+		techniques[2] = Technique.getTechnique(Integer.parseInt(id));
+
+		id = getTextValue(id, docElement, "back-up");
+		techniques[3] = Technique.getTechnique(Integer.parseInt(id));
+
+		id = getTextValue(id, docElement, "back-down");
+		techniques[4] = Technique.getTechnique(Integer.parseInt(id));
+
+		id = getTextValue(id, docElement, "forward");
+		techniques[5] = Technique.getTechnique(Integer.parseInt(id));
+
+		id = getTextValue(id, docElement, "forward-up");
+		techniques[6] = Technique.getTechnique(Integer.parseInt(id));
+
+		id = getTextValue(id, docElement, "forward-down");
+		techniques[7] = Technique.getTechnique(Integer.parseInt(id));
+		
+		return techniques;
+	}
+	
+	private String getTextValue(String def, Element doc, String tag) {
+	    String value = def;
+	    NodeList nl;
+	    nl = doc.getElementsByTagName(tag);
+	    if (nl.getLength() > 0 && nl.item(0).hasChildNodes()) {
+	        value = nl.item(0).getFirstChild().getNodeValue();
+	    }
+	    return value;
 	}
 	
 }

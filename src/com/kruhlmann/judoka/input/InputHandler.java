@@ -32,10 +32,16 @@ public class InputHandler implements KeyListener, FocusListener{
 	public boolean menuRight;
 	public boolean menuLeft;
 	
+	/**
+	 * Constructor
+	 */
 	public InputHandler(){
 		keys = new boolean[65536];
 	}
 	
+	/**
+	 * Sets the keys to false/true
+	 */
 	public void update() {
 		up 		= keys[KeyEvent.VK_UP];
 		down 	= keys[KeyEvent.VK_DOWN];
@@ -106,32 +112,55 @@ public class InputHandler implements KeyListener, FocusListener{
 		}
 	}
 
+	/**
+	 * Happens when a key is pressed down
+	 */
 	public void keyPressed(KeyEvent e) {
 		keys[e.getKeyCode()] = true;
 	}
 
+	/**
+	 * Happens when a key is released
+	 */
 	public void keyReleased(KeyEvent e) {
 		keys[e.getKeyCode()] = false;
 	}
 
+	/**
+	 * Method for handling the actual value of a typed key
+	 */
 	public void keyTyped(KeyEvent e) {
 	}
 
+	/**
+	 * Happens when the window gains focus
+	 */
 	public void focusGained(FocusEvent arg0) {
 		focused = true;
 	}
 	
+	/**
+	 * Sets all keys to false
+	 */
 	public void flush(){
 		for(int i = 0; i < keys.length; i++){
 			keys[i] = false;
 		}
 	}
 
+	/**
+	 * Happens when focus of the window is lost
+	 */
 	public void focusLost(FocusEvent arg0) {
 		focused = false;
 		flush();
 	}
 	
+	/**
+	 * Gets the value of a key then sets it to false
+	 * @param key : key to be toggled
+	 * @return whether the key was pressed
+	 */
 	private boolean toggle(int key) {
 		if(keys[key]){
 			keys[key] = false;
@@ -140,6 +169,10 @@ public class InputHandler implements KeyListener, FocusListener{
 		return false;
 	}
 	
+	/**
+	 * Gets a typed key from keyboard
+	 * @return the key pressed
+	 */
 	public String getTypedKey(){
 		if(q) return "q";
 		if(w) return "w";

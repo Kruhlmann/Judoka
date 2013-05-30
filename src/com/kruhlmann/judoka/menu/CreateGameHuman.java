@@ -52,7 +52,7 @@ public class CreateGameHuman extends Menu {
 		if(JudokaComponent.input.down) selectedItem ++;
 		if(selectedItem > items.length - 1) selectedItem = items.length - 1;
 		if(selectedItem < 0) selectedItem = 0;
-		if(JudokaComponent.input.enter && selectedItem == 0) JudokaComponent.changeLevel(false, dojo, 0);
+		if(JudokaComponent.input.enter && selectedItem == 0) JudokaComponent.changeMenu(JudokaComponent.SELECT_PLAYER, new Object[]{dojo});
 		else if(JudokaComponent.input.enter && selectedItem == 1) dojo ++;
 		else if(JudokaComponent.input.enter && selectedItem == 2) JudokaComponent.changeMenu(JudokaComponent.SINGLEPLAYER);
 		

@@ -29,6 +29,7 @@ import com.kruhlmann.judoka.menu.JudokaCreator;
 import com.kruhlmann.judoka.menu.Main;
 import com.kruhlmann.judoka.menu.Menu;
 import com.kruhlmann.judoka.menu.Multiplayer;
+import com.kruhlmann.judoka.menu.SelectPlayer;
 import com.kruhlmann.judoka.menu.Singleplayer;
 import com.kruhlmann.judoka.menu.TechniquePicker;
 import com.kruhlmann.judoka.sound.Sound;
@@ -41,10 +42,10 @@ public class JudokaComponent extends Canvas implements Runnable{
 	}
 	
 	///Final variables///
-	public static final String VERSION = "Alpha 0.4.3";
+	public static final String VERSION = "Alpha 0.5";
 
 	public static final long serialVersionUID = 3250072112674679916L;
-	public static final boolean mute = false;
+	public static final boolean mute = true;
 	public static final int HEIGHT = 540;
 	public static final int WIDTH = 960;
 
@@ -74,6 +75,7 @@ public class JudokaComponent extends Canvas implements Runnable{
 		public static final Menu EXIT = new Exit();
 		public static final Menu MAIN = new Main();
 		public static final Menu TECHNIQUE_PICKER = new TechniquePicker();
+		public static final Menu SELECT_PLAYER = new SelectPlayer();
 
 		public static JudokaCreator CREATE_JUDOKA;
 	
@@ -367,7 +369,7 @@ public class JudokaComponent extends Canvas implements Runnable{
 	 * @param dojo : dojo background id
 	 * @param difficulty : AI difficulty
 	 */
-	public static void changeLevel(boolean multiplayer, int dojo, int difficulty){
+	public static void changeLevel(boolean multiplayer, int dojo, int difficulty, Technique[] player1Techniques, Technique[] player2Techniques){
 		Sound.MUSIC_MENU.stop();
 		if(Sound.alternativeBattleMusic) Sound.ALT_FIGHTING_MUSIC.play(true);
 		else Sound.FIGHTING_MUSIC.play(true);
@@ -375,6 +377,8 @@ public class JudokaComponent extends Canvas implements Runnable{
 		if(!multiplayer)gameState = GameState.SINGLE;
 		else gameState = GameState.MULTI;
 		level = new Level(multiplayer, difficulty, dojo);
+		level.player1.setTechniques(player1Techniques);
+		level.player2.setTechniques(player1Techniques);
 	}
 	
 	/**
@@ -392,11 +396,14 @@ public class JudokaComponent extends Canvas implements Runnable{
 	}
 
 	public static void drawTextBox(int x, int y, int width, int height, Graphics g) {
+		Color oldColor = g.getColor();
+		g.setColor(Color.BLACK);
 		g.drawRect(x, y, width, height);
 		g.drawRect(x + 1, y + 1, width, height);
 		g.drawRect(x + 2, y + 2, width, height);
 		g.setColor(Color.WHITE);
 		g.fillRect(x + 3, y + 3, width - 3, height - 3);
+		g.setColor(oldColor);
 	}
 	
 	public static void loadAnimations() {

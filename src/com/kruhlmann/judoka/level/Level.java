@@ -38,8 +38,8 @@ public class Level {
 		this.multiplayer = multiplayer;
 		this.difficulty = difficulty;
 		this.dojo = dojo;
-		player1 = new Player(JudokaComponent.judokaStanding1, this);
-		player2 = new Player2(JudokaComponent.judokaStanding1, this);
+		player1 = new Player(JudokaComponent.judokaStanding1, this, "j");
+		player2 = new Player2(JudokaComponent.judokaStanding1, this, "j");
 	}
 
 	/**

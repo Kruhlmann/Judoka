@@ -165,5 +165,21 @@ public class Technique {
 			}
 		}
 	}
+	
+	public static Technique getTechnique(int id){
+		for(Technique t: techniquesBack){
+			if(t.ID == id) return t;
+		}
+		for(Technique t: techniquesForward){
+			if(t.ID == id) return t;
+		}
+		for(Technique t: techniquesUp){
+			if(t.ID == id) return t;
+		}
+		for(Technique t: techniquesDown){
+			if(t.ID == id) return t;
+		}
+		return null;
+	}
 
 }

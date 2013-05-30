@@ -9,8 +9,8 @@ import com.kruhlmann.judoka.sound.Sound;
 
 public class Player2 extends Entity{
 	
-	public Player2(BufferedImage playerImage, Level level) {
-		super(playerImage, level);
+	public Player2(BufferedImage playerImage, Level level, String name) {
+		super(playerImage, level, name);
 		x = level.getDojoBorder(false, level.dojo);
 	}
 	
@@ -124,15 +124,15 @@ public class Player2 extends Entity{
 		//Throw logic
 		if(input.enter && playerState == PlayerState.GRIPPING && cooldown == 0){
 			if(input.left && !input.d && !input.up && !input.down) {
-				currentTechnique = forward;
+				currentTechnique = techniques[5];
 				playerState = PlayerState.THROWING;
 				level.player1.playerState = PlayerState.BEING_THROWN;
 			}else if(input.right && !input.a && !input.up && !input.down) {
-				currentTechnique = backward;
+				currentTechnique = techniques[2];
 				playerState = PlayerState.THROWING;
 				level.player1.playerState = PlayerState.BEING_THROWN;
 			}else if(input.right && !input.a && input.up && !input.down) {
-				currentTechnique = backwardUp;
+				currentTechnique = techniques[3];
 				playerState = PlayerState.THROWING;
 				level.player1.playerState = PlayerState.BEING_THROWN;
 			}

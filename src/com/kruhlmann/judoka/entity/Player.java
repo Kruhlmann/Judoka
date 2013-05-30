@@ -8,8 +8,8 @@ import com.kruhlmann.judoka.level.Level;
 
 public class Player extends Entity{
 	
-	public Player(BufferedImage playerImage, Level level) {
-		super(playerImage, level);
+	public Player(BufferedImage playerImage, Level level, String name) {
+		super(playerImage, level, name);
 		x = level.getDojoBorder(true, level.dojo);
 	}
 	
@@ -121,15 +121,15 @@ public class Player extends Entity{
 		//Throw logic
 		if(input.space && playerState == PlayerState.GRIPPING && cooldown == 0){
 			if(input.d && !input.left && !input.w && !input.s) {
-				currentTechnique = forward;
+				currentTechnique = techniques[5];
 				playerState = PlayerState.THROWING;
 				level.player2.playerState = PlayerState.BEING_THROWN;
 			}else if(input.a && !input.right && !input.w && !input.s) {
-				currentTechnique = backward;
+				currentTechnique = techniques[2];
 				playerState = PlayerState.THROWING;
 				level.player2.playerState = PlayerState.BEING_THROWN;
 			}else if(input.a && !input.right && input.w && !input.s) {
-				currentTechnique = backwardUp;
+				currentTechnique = techniques[3];
 				playerState = PlayerState.THROWING;
 				level.player2.playerState = PlayerState.BEING_THROWN;
 			}
