@@ -15,7 +15,7 @@ import com.kruhlmann.judoka.technique.Technique;
 public class JudokaCreator extends Menu{
 
 	public String name = "Judoka #1"; // 16 max length
-	public int timer, saveTimer;
+	public int timer, saveTimer = 300;
 	public String[] techniqueTitle = {
 			"Up",
 			"Down",
@@ -28,22 +28,23 @@ public class JudokaCreator extends Menu{
 	};
 	
 	//public Technique[] techniques = new Technique[8];
-	public Technique[] techniques = {
-			Technique.UCHI_MATA,
-			Technique.UCHI_MATA,
-			Technique.UCHI_MATA,
-			Technique.UCHI_MATA,
-			Technique.UCHI_MATA,
-			Technique.UCHI_MATA,
-			Technique.UCHI_MATA,
-			Technique.UCHI_MATA
-	};
+	public Technique[] techniques;
 	
 	/**
 	 * Constructor of sub menu
 	 */
 	public JudokaCreator() {
 		super();
+		techniques = new Technique[]{
+				Technique.UCHI_MATA,
+				Technique.UCHI_MATA,
+				Technique.UCHI_MATA,
+				Technique.UCHI_MATA,
+				Technique.UCHI_MATA,
+				Technique.UCHI_MATA,
+				Technique.UCHI_MATA,
+				Technique.UCHI_MATA
+		};
 	}
 
 	/**
@@ -142,7 +143,7 @@ public class JudokaCreator extends Menu{
 				if (!notReadyToSave){
 					try {
 						JudokaComponent.propertyFileHandler.saveJudoka(techniques, name);
-						displaySuccessfulSave();
+						saveTimer = 0;
 					} catch (FileNotFoundException e) { e.printStackTrace();
 					} catch (ParserConfigurationException e) { e.printStackTrace();
 					} catch (IOException e) { e.printStackTrace(); 
@@ -165,10 +166,6 @@ public class JudokaCreator extends Menu{
 	
 	public void setTechnique(int index, Technique technique){
 		techniques[index] = technique;
-	}
-	
-	public void displaySuccessfulSave(){
-		saveTimer = 0;
 	}
 
 }

@@ -10,10 +10,11 @@ import com.kruhlmann.judoka.sound.Sound;
 
 public class Technique {
 
-	public static Technique O_SOTO_GARI = new Technique(0, 40, 30, 20, Animation.O_SOTO_GARI, Animation.o_soto_gari, 60, 30, 30, 20, 20, 40, 30, 30, false, true, true, true, null, null, "O Soto Gari");
-	public static Technique UCHI_MATA = new Technique(1, 35, 29, 25, Animation.UCHI_MATA, Animation.uchi_mata, 50, 40, 0, 20, 25, 30, 20, 20, false, true, true, false, null, null, "Uchi Mata");
-	public static Technique MOROTE_SEOI_NAGE = new Technique(2, 45, 37, 15, Animation.MOROTE_SEOI_NAGE, Animation.morote_seoi_nage, 60, 0, 10, 8, 7, 15, 20, 15, false, false, true, true, null, null, "Morote Seoi Nage");
-	public static Technique ERI_SEOI_NAGE = new Technique(3, 50, 40, 12, Animation.MOROTE_SEOI_NAGE, Animation.morote_seoi_nage, 60, 0, 15, 7, 7, 15, 10, 10, false, false, true, true, null, null, "Eri Seoi Nage");
+	public static Technique O_SOTO_GARI;
+	public static Technique UCHI_MATA;
+	public static Technique MOROTE_SEOI_NAGE;
+	public static Technique ERI_SEOI_NAGE;
+	public static Technique O_UCHI_GARI;
 	
 	public static Technique[] techniquesBack;
 	public static Technique[] techniquesForward;
@@ -135,24 +136,19 @@ public class Technique {
 		int roll = random.nextInt(100);
 		
 		roll += ((400 - target.energy) / 4);
-		System.out.println((400 - target.energy) / 8);
 				
 		if(roll < this.SUCCESS_RATE){
-			System.out.println(NAME + " was successful");
 			JudokaComponent.techniqueTimer = JudokaComponent.timer;
 			target.energy -= this.ENERGY_LOST_ON_SUCCESS;
 			if(roll <= this.YUKO_CHANCE && roll > this.WAZA_CHANCE){
-				System.out.println("Player 2 scored a yuko with " + NAME);
 				self.yukos ++;
 				this.SUCCESS = true;
 			}
 			else if(roll <= this.WAZA_CHANCE && roll > this.IPPON_CHANCE){
-				System.out.println("Player 2 scored a waza with " + NAME);
 				self.wazaaris ++;
 				this.SUCCESS = true;
 			}
 			else if(roll <= this.IPPON_CHANCE){
-				System.out.println("Player 2 scored a ippon with " + NAME);
 				self.ippons ++;
 				this.SUCCESS = true;
 			}else{
@@ -161,12 +157,10 @@ public class Technique {
 			if(SUCCESS) 
 				Sound.HIT2.play(false);
 		}else{
-			System.out.println(NAME + " failed!");
 			Sound.HIT4.play(false);
 			self.energy -= this.ENERGY_LOST_ON_FAILURE;
 			roll = random.nextInt(100);
 			if(roll < this.GRIB_BREAK_CHANCE && this.CAN_BREAK_GRIB){
-				System.out.println(NAME + " broke the grib");
 				this.BROKE_GRIB = true;
 			}
 		}

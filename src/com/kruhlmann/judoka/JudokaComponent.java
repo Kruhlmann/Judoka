@@ -73,8 +73,9 @@ public class JudokaComponent extends Canvas implements Runnable{
 		public static final Menu ABOUT = new About();
 		public static final Menu EXIT = new Exit();
 		public static final Menu MAIN = new Main();
-		public static final JudokaCreator CREATE_JUDOKA = new JudokaCreator();
 		public static final Menu TECHNIQUE_PICKER = new TechniquePicker();
+
+		public static JudokaCreator CREATE_JUDOKA;
 	
 	///Public non final variables///
 	public static boolean running;
@@ -125,6 +126,10 @@ public class JudokaComponent extends Canvas implements Runnable{
 		public static BufferedImage MOROTE1;
 		public static BufferedImage MOROTE2;
 		public static BufferedImage MOROTE3;
+		
+		public static BufferedImage oUchiGari1;
+		public static BufferedImage oUchiGari2;
+		public static BufferedImage oUchiGari3;
 	
 	/**
 	 * Main constructor for Judoka game
@@ -176,12 +181,18 @@ public class JudokaComponent extends Canvas implements Runnable{
 		    MOROTE1 = characterSheet.getSubimage(192, 24, 16, 24);
 		    MOROTE2 = characterSheet.getSubimage(64, 24, 16, 24);
 		    MOROTE3 = getFlippedImage(characterSheet.getSubimage(16, 24, 16, 24));
+
+		    oUchiGari1 = characterSheet.getSubimage(112, 0, 16, 24);
+		    oUchiGari2 = characterSheet.getSubimage(176, 48, 16, 24);
+		    oUchiGari3 = characterSheet.getSubimage(0, 24, 16, 24);
 		} catch (IOException e) {
 			System.out.println("[Warning] Unable to load image files");
 		}
 		
 		loadAnimations();
 		loadTechniques();
+		
+		CREATE_JUDOKA = new JudokaCreator();
 		
 		addKeyListener(input);	
 		menuImage = mainMenuImage;
@@ -397,7 +408,9 @@ public class JudokaComponent extends Canvas implements Runnable{
 
 	    Animation.O_SOTO_GARI = new Animation(JudokaComponent.oSotoGari1, JudokaComponent.oSotoGari2, JudokaComponent.oSotoGari3);
 	    Animation.o_soto_gari = new Animation(JudokaComponent.judokaStanding1, JudokaComponent.judokaStanding2, JudokaComponent.judokaStanding1);
-
+	    
+	    Animation.O_UCHI_GARI = new Animation(JudokaComponent.oUchiGari1, JudokaComponent.oUchiGari2, JudokaComponent.oUchiGari3);
+	    Animation.o_uchi_gari = new Animation(JudokaComponent.judokaStanding1, JudokaComponent.judokaStanding2, JudokaComponent.judokaStanding1);
 	}
 
 	public static void loadTechniques() {
@@ -405,6 +418,8 @@ public class JudokaComponent extends Canvas implements Runnable{
 	    Technique.UCHI_MATA = new Technique(1, 35, 29, 25, Animation.UCHI_MATA, Animation.uchi_mata, 50, 40, 0, 20, 25, 30, 20, 20, false, true, true, false, null, null, "Uchi Mata");
 	    Technique.MOROTE_SEOI_NAGE = new Technique(2, 45, 37, 15, Animation.MOROTE_SEOI_NAGE, Animation.morote_seoi_nage, 60, 0, 10, 8, 7, 15, 20, 15, false, false, true, true, null, null, "Morote Seoi Nage");
 	    Technique.ERI_SEOI_NAGE = new Technique(3, 50, 40, 12, Animation.MOROTE_SEOI_NAGE, Animation.morote_seoi_nage, 60, 0, 15, 7, 7, 15, 10, 10, false, false, true, true, null, null, "Eri Seoi Nage");
+	    Technique.O_UCHI_GARI = new Technique(4, 50, 25, 15, Animation.O_UCHI_GARI, Animation.o_uchi_gari, 70, 0, 10, 8, 8, 0, 20, 0, false, false, true, true, null, null, "O Uchi Gari");
+	    
 	    Technique.techniquesBack = new Technique[]{
 			Technique.UCHI_MATA,
 			null, // Harai goshi
@@ -425,7 +440,7 @@ public class JudokaComponent extends Canvas implements Runnable{
 				null, //Ko uchi gake
 				null, //Ko uchi makekomi
 				null, //Harai tsurikomi ashi
-				null, //O uchi gari
+				Technique.O_UCHI_GARI,
 				null, //De ashi barai
 				null, //Okouri ashi barai
 		};
@@ -436,6 +451,7 @@ public class JudokaComponent extends Canvas implements Runnable{
 		
 		Technique.techniquesDown = new Technique[]{
 				null, //Tani otoshi
+				Technique.O_UCHI_GARI,
 		};
 	}
 	

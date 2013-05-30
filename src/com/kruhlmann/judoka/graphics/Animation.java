@@ -12,7 +12,11 @@ public class Animation {
 	
 	public static Animation O_SOTO_GARI;
 	public static Animation o_soto_gari;
-
+	
+	public static Animation O_UCHI_GARI;
+	public static Animation o_uchi_gari;
+	
+	//////
 	
 	public int ID;
 	public BufferedImage[] SPRITES;

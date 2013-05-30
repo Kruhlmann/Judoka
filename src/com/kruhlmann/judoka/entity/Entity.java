@@ -24,7 +24,7 @@ public class Entity {
 	public int cooldown = 0;
 	
 	//Techniques
-	public Technique forward = Technique.O_SOTO_GARI;
+	public Technique forward = Technique.O_UCHI_GARI;
 	public Technique backward = Technique.UCHI_MATA;
 	public Technique backwardUp = Technique.MOROTE_SEOI_NAGE;
 	
