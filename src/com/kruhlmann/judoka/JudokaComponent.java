@@ -41,10 +41,10 @@ public class JudokaComponent extends Canvas implements Runnable{
 	}
 	
 	///Final variables///
-	public static final String VERSION = "Alpha 0.4.2";
+	public static final String VERSION = "Alpha 0.4.3";
 
 	public static final long serialVersionUID = 3250072112674679916L;
-	public static final boolean mute = true;
+	public static final boolean mute = false;
 	public static final int HEIGHT = 540;
 	public static final int WIDTH = 960;
 

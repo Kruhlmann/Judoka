@@ -21,6 +21,7 @@ public class Level {
 	public int dojo;
 	public int clock = 240;
 	public int pauseClock;
+	public int flushTimer;
 	
 	public Player player1;
 	public Player2 player2;
@@ -136,6 +137,8 @@ public class Level {
 	 */
 	public void update(){
 		
+		if(flushTimer > 0) flushTimer --;
+		
 		//Prevents interference from input while throwing
 		if(player1.playerState != PlayerState.GRIPPING && player1.playerState != PlayerState.NOT_GRIPPING){
 			JudokaComponent.input.flush();
@@ -173,7 +176,7 @@ public class Level {
 			player2.update();
 			if(JudokaComponent.input.escape) JudokaComponent.changeMenuFromLevel(JudokaComponent.MAIN);
 		}else{
-			if(JudokaComponent.input.escape || JudokaComponent.input.enter || JudokaComponent.input.space) JudokaComponent.changeMenuFromLevel(JudokaComponent.MAIN);
+			if((JudokaComponent.input.escape || JudokaComponent.input.enter || JudokaComponent.input.space) && (flushTimer == 0)) JudokaComponent.changeMenuFromLevel(JudokaComponent.MAIN);
 		}
 		
 		//Checks if the match is over and then ends the match
@@ -268,6 +271,7 @@ public class Level {
 		player2.playerState = PlayerState.LOSER;
 		player1.x = getDojoBorder(true, dojo);
 		player2.x = getDojoBorder(false, dojo);
+		flushTimer = 100;
 	}
 
 	/**
@@ -284,6 +288,7 @@ public class Level {
 		player1.playerState = PlayerState.LOSER;
 		player1.x = getDojoBorder(true, dojo);
 		player2.x = getDojoBorder(false, dojo);
+		flushTimer = 100;
 	}
 
 	/**
